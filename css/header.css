@@ -1,0 +1,29 @@
+.headerNavBar {
+  background-color: var(--liquid-lava);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: row;
+  gap: var(--12px);
+  padding: var(--8px) var(--16px);
+  border-radius: var(--radius-xlg);
+}
+
+.iconMenu {
+  width: var(--36px);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.icon {
+  width: var(--icon-24);
+  height: var(--icon-24);
+}
+
+.navLabel {
+  font-size: var(--8px);
+  font-weight: 600;
+  color: var(--snow);
+}
