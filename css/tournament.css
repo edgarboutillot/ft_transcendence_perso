@@ -58,6 +58,17 @@
   /* display: none;  */
 }
 
+.subTournamentSection2 {
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+  justify-content: space-evenly;
+  align-items: center;
+  gap: var(--32px);
+  /* display: none;  */
+}
+
+
 .tournamentSection1 {
   display: flex;
   width: 16.719vw;
@@ -253,6 +264,7 @@
   font-family: "Inter", sans-serif;
   font-weight: 600;
   padding: var(--4px) var(--0px);
+  cursor: pointer;
 }
 
 .numberMid {
@@ -267,6 +279,7 @@
   font-family: "Inter", sans-serif;
   font-weight: 600;
   padding: var(--4px) var(--0px);
+  cursor: pointer;
 }
 
 .numberRight {
@@ -281,6 +294,7 @@
   font-family: "Inter", sans-serif;
   font-weight: 600;
   padding: var(--4px) var(--0px);
+  cursor: pointer;
 }
 
 .wiresHorizontal {
@@ -337,7 +351,65 @@
   position: absolute;
   height: 0.2vw;
   width: 6.3vw;
-  left: 102%;
+  left: 100%;
+  top: 49%;
+}
+
+.wiresHorizontal4 {
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  border: 0.2vw solid var(--snow);
+  border-right: none;
+  height: 8.5vw;
+  width: 3vw;
+  left: -20%;
+  top: 45%;
+}
+
+.wiresHorizontal4::after {
+  background-color: var(--snow);
+  content: "";
+  position: absolute;
+  top: 51%;
+  left: -149%; /* Ajustement pour tenir compte de l'épaisseur de la bordure */
+  width: 4vw; /* Longueur de la ligne horizontale */
+  height: 0.2vw; /* Épaisseur de la ligne */
+}
+
+.wiresHorizontal5 {
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: absolute;
+  border: 0.2vw solid var(--snow);
+  border-right: none;
+  height: 16.5vw;
+  width: 3vw;
+  left: -20%;
+  top: 45%;
+}
+
+.wiresHorizontal5::after {
+  background-color: var(--snow);
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: -134%; /* Ajustement pour tenir compte de l'épaisseur de la bordure */
+  width: 3.6vw; /* Longueur de la ligne horizontale */
+  height: 0.2vw; /* Épaisseur de la ligne */
+}
+
+.wiresHorizontal6 {
+  background-color: var(--snow);
+  content: "";
+  position: absolute;
+  height: 0.2vw;
+  width: 6.3vw;
+  left: -40%;
   top: 49%;
 }
 
@@ -348,6 +420,7 @@
   
 .hidden
 {
-	opacity: 0;
-	pointer-events: none;
+	/* opacity: 0;
+	pointer-events: none; */
+  display: none;
 }

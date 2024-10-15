@@ -1,44 +1,42 @@
 
+const displayNumberPlayer = document.querySelectorAll('.numberLeft, .numberMid, .numberRight');
+const fourPlayer = document.querySelector('.subTournamentSection');
+const eightPlayer = document.querySelector('.subTournamentSection2');
+const sixteenPlayer = document.querySelector('.subTournamentSection3');
 
 
-// const elements = document.querySelectorAll('.bracketNameLeft, .bracketNameRight');
+const displaySide = document.querySelectorAll('.bracketNameLeft, .bracketNameRight');
+const SideRight = document.querySelector('.subTournamentSection');
+const SideLeft = document.querySelector('.subTournamentSection2');
 
-// const disappearingDiv = document.querySelector('.tournamentSection1');
-        
-// elements.forEach(function(element) 
-// {
-//     element.addEventListener('click', function() 
-//     {
-//         elements.forEach(el => el.classList.remove('orange'));
-//         this.classList.add('orange');
 
-//         if (this.classList.contains('bracketNameRight')) {
-//             tournamentSection1.classList.add('hidden');
-//         } else {
-//             tournamentSection1.classList.remove('hidden');
-//         }
-//     });
-// });
-
-const elements = document.querySelectorAll('.bracketNameLeft, .bracketNameRight');
-const tournamentSection1 = document.querySelector('.tournamentSection1');
-
-elements.forEach(function(element) {
-    element.addEventListener('click', function() {
-        // Remove 'orange' class from all elements
-        elements.forEach(el => el.classList.remove('orange'));
-        
-        // Add 'orange' class to the clicked element
+displayNumberPlayer.forEach(function(color)
+{
+    color.addEventListener('click', function() 
+    {
+        displayNumberPlayer.forEach(el => el.classList.remove('orange'));
         this.classList.add('orange');
+    });
 
-        // Check if the clicked element is RIGHT
+});
+
+displaySide.forEach(function(color)
+{
+    color.addEventListener('click', function() 
+    {
+        displaySide.forEach(el => el.classList.remove('orange'));
+        this.classList.add('orange');
         if (this.classList.contains('bracketNameRight')) 
         {
-            tournamentSection1.classList.add('hidden');
+            SideRight.classList.add('hidden');
+            SideLeft.classList.remove('hidden');
         } 
         else 
         {
-            tournamentSection1.classList.remove('hidden');
+            SideRight.classList.remove('hidden');
+            SideLeft.classList.add('hidden');
         }
     });
 });
+
+
