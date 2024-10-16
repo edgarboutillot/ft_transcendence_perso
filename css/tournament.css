@@ -58,7 +58,6 @@
   /* display: none;  */
 }
 
-
 .subTournamentSection8161 {
   display: flex;
   width: 100%;
@@ -235,16 +234,16 @@
 }
 
 .bracketNameRight {
-	display: flex;
-	width: 3.542vw;
-	border-radius: var(--8px);
-	flex-direction: row;
-	justify-content: center;
-	align-items: center;
-	height: 1.5vw;
-	/* cursor: pointer; */
-	transition: color 0.3s ease;
-  }
+  display: flex;
+  width: 3.542vw;
+  border-radius: var(--8px);
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  height: 1.5vw;
+  /* cursor: pointer; */
+  transition: color 0.3s ease;
+}
 
 .buttonPlay {
   display: flex;
@@ -457,33 +456,30 @@
   top: 49%;
 }
 
-
-.option-btn, .nav-btn {
-
+.option-btn,
+.nav-btn {
   cursor: pointer;
   user-select: none;
 }
 
-.option-btn:hover, .nav-btn:hover {
+.option-btn:hover,
+.nav-btn:hover {
   background-color: var(--liquid-lava);
 }
 
-.option-btn.active, .nav-btn.active {
+.option-btn.active,
+.nav-btn.active {
   background-color: var(--liquid-lava);
 }
 
-
-.shape
-{
+.shape {
   display: none;
 }
 
-.nav-16
-{
+.nav-16 {
   display: none;
 }
 
-.active
-{
+.active {
   display: flex;
 }
