@@ -1,8 +1,8 @@
 
 const displayNumberPlayer = document.querySelectorAll('.numberLeft, .numberMid, .numberRight');
-const fourPlayer = document.querySelector('.subTournamentSection');
-const eightPlayer = document.querySelector('.subTournamentSection2');
-const sixteenPlayer = document.querySelector('.subTournamentSection3');
+
+
+
 
 
 const displaySide = document.querySelectorAll('.bracketNameLeft, .bracketNameRight');
