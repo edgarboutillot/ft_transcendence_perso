@@ -1,0 +1,114 @@
+.main {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: var(--dark-void);
+    gap: var(--16px);
+    padding: var(--24px);
+  }
+
+  .subMain
+  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: row;
+    gap: var(--24px);
+    padding: var(--24px);
+    background-color: var(--gluon-grey);
+    border-radius: var(--24px);
+  }
+
+  .leftMain
+  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 22.24vw;
+    height: 100%;
+    flex-direction: column;
+    gap: 4.531vw;
+    padding: 0vw 2.135vw;
+    border-radius: var(--24px);
+    background-color: var(--dark-grey);
+  }
+
+  .title
+  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    gap: var(--10px);
+    padding: 2.5vw 0vw;
+    font-family: "Inter", sans-serif;
+    font-weight: 600;
+    color: var(--snow);
+    font-size: var(--32px);
+  }
+
+  .onlinePlayers
+  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+    gap: var(--20px);
+  }
+  
+  .onlineOpponent
+  {
+    background-color: aliceblue;
+  }
+
+  .rightMain 
+  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    gap: var(--24px);
+  } 
+
+  .upRightMain
+  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    flex-direction: row;
+    background-color: var(--dark-grey);
+    gap: var(--16px);
+    padding: 1.25vw 2.708vw;
+    border-radius: var(--24px);
+  }
+
+  .downRightMain
+  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100%;
+    flex-direction: column;
+    background-color: var(--dark-grey);
+    gap: var(--24px);
+    padding: var(--24px);
+    border-radius: var(--24px); 
+  }
+
+  .lobbyOppenent
+  {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: aliceblue;
+  }
