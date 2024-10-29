@@ -1,0 +1,160 @@
+body {
+	font-family: system-ui, -apple-system, sans-serif;
+	background: #0f172a;
+	color: white;
+	margin: 0;
+	padding: 20px;
+	line-height: 1.6;
+}
+
+.container {
+	max-width: 1200px;
+	margin: 0 auto;
+}
+
+.setup-phase, .tournament-phase {
+	background: #1e293b;
+	border-radius: 12px;
+	padding: 20px;
+	margin-bottom: 20px;
+}
+
+h2 {
+	margin-top: 0;
+	color: #60a5fa;
+}
+
+.form {
+	background: #2d3748;
+	padding: 20px;
+	border-radius: 8px;
+	margin-bottom: 20px;
+}
+
+select, input {
+	width: 100%;
+	padding: 8px;
+	margin: 8px 0;
+	border-radius: 4px;
+	border: 1px solid #4b5563;
+	background: #374151;
+	color: white;
+}
+
+button {
+	background: #3b82f6;
+	color: white;
+	border: none;
+	padding: 10px 20px;
+	border-radius: 4px;
+	cursor: pointer;
+	margin: 5px;
+}
+
+button:hover {
+	background: #2563eb;
+}
+
+.tournament-bracket {
+	display: flex;
+	gap: 40px;
+	overflow-x: auto;
+	padding: 20px 0;
+}
+
+.round {
+	flex: 1;
+	min-width: 250px;
+}
+
+.match {
+	background: #2d3748;
+	border-radius: 8px;
+	padding: 15px;
+	margin: 10px 0;
+	position: relative;
+}
+
+.match.active {
+	border: 2px solid #60a5fa;
+}
+
+.player {
+	display: flex;
+	justify-content: space-between;
+	padding: 8px;
+	margin: 5px 0;
+	background: #374151;
+	border-radius: 4px;
+}
+
+.player.winner {
+	background: #065f46;
+	color: #6ee7b7;
+}
+
+.score {
+	font-weight: bold;
+}
+
+.controls {
+	text-align: center;
+	margin: 20px 0;
+}
+
+#statusMessage {
+	text-align: center;
+	padding: 10px;
+	margin: 10px 0;
+	border-radius: 4px;
+}
+
+
+.restart-button {
+background: #3b82f6;
+color: white;
+padding: 12px 24px;
+border: none;
+border-radius: 6px;
+font-size: 16px;
+margin-top: 15px;
+cursor: pointer;
+transition: all 0.3s ease;
+display: inline-block;
+}
+
+.restart-button:hover {
+background: #2563eb;
+transform: translateY(-2px);
+}
+
+/* Styles supplémentaires pour le message de fin */
+#statusMessage {
+text-align: center;
+padding: 20px;
+border-radius: 8px;
+margin: 20px 0;
+transition: background-color 0.3s ease;
+}
+
+#statusMessage h2 {
+margin: 0 0 15px 0;
+color: white;
+font-size: 24px;
+}
+
+/* Animation pour le bouton de restart */
+@keyframes fadeIn {
+from {
+opacity: 0;
+transform: translateY(10px);
+}
+to {
+opacity: 1;
+transform: translateY(0);
+}
+}
+
+.restart-button {
+animation: fadeIn 0.5s ease-out;
+}
