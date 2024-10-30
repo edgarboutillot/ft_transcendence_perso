@@ -75,36 +75,43 @@ function closeTournamentConfig() {
     tournamentConfig.style.display = 'none';
 }
 
+
 function generatePlayerFields(count) {
-    const container = document.getElementById('players-container');
-    container.innerHTML = '';
+  const container = document.getElementById('players-container');
+  container.innerHTML = '';
+  
+  // Liste des avatars disponibles
+  const avatars = [
+      'bullfinch.png',
+      'clown-fish.png',
+      'hedgehog.png',
+      'ladybug.png',
+      'mouse.png',
+      'parrot.png',
+      'penguin.png',
+      'pig.png'
+  ];
 
-    // Premier joueur (utilisateur actuel)
-    container.innerHTML += `
-        <div class="player-entry">
-            <img class="player-avatar" src="/assets/avatars/buffalo.png" />
-            <input type="text" class="player-input" value="YourNickname" />
-        </div>
-    `;
+  // Premier joueur (utilisateur actuel)
+  container.innerHTML += `
+      <div class="player-entry">
+          <img class="player-avatar" src="/assets/avatars/buffalo.png" />
+          <input type="text" class="player-input" value="YourNickname" />
+      </div>
+  `;
 
-    // Autres joueurs (bots par défaut)
-    for(let i = 1; i < count; i++) {
-        container.innerHTML += `
-            <div class="player-entry">
-                <img class="player-avatar" src="/assets/avatars/mouse.png" />
-                <input type="text" class="player-input" value="Bot Player ${i}" />
-                <button class="add-friend-btn">
-                    <img src="/assets/icons/user-plus.svg" />
-                </button>
-            </div>
-        `;
-    }
+  // Autres joueurs (bots avec avatars aléatoires)
+  for(let i = 1; i < count; i++) {
+      const randomAvatar = avatars[Math.floor(Math.random() * avatars.length)];
+      container.innerHTML += `
+          <div class="player-entry">
+              <img class="player-avatar" src="/assets/avatars/${randomAvatar}" />
+              <input type="text" class="player-input" value="Bot Player ${i}" />
+              <button class="add-friend-btn">
+                  <img src="/assets/icons/add_friend.svg" />
+              </button>
+          </div>
+      `;
+  }
 }
-
-// Fermer la popup si on clique en dehors
-tournamentConfig.addEventListener('click', (e) => {
-    if (e.target === tournamentConfig) {
-        closeTournamentConfig();
-    }
-});
 

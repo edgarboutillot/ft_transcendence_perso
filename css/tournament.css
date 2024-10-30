@@ -555,8 +555,8 @@
 
 .close-icon {
   cursor: pointer;
-  width: var(--24px);
-  height: var(--24px);
+  width: var(--32px);
+  height: var(--32px);
   fill: var(--snow);
 }
 
@@ -632,4 +632,14 @@
   font-weight: 600;
   border: none;
   cursor: pointer;
+}
+
+.h2Title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--snow);
+  font-size: var(--24px);
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
 }
