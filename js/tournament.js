@@ -48,3 +48,63 @@ rightBtn.addEventListener("click", () => {
 });
 
 handleOptionChange("4");
+
+
+/* 2 */
+
+// Ajoutez ce JavaScript à votre fichier tournament.js
+const playButton = document.querySelector('.buttonPlay');
+const tournamentConfig = document.getElementById('tournamentConfig');
+
+playButton.addEventListener('click', () => {
+    const playerCount = getSelectedPlayerCount();
+    openTournamentConfig(playerCount);
+});
+
+function getSelectedPlayerCount() {
+    const activeButton = document.querySelector('.option-btn.active');
+    return parseInt(activeButton.id);
+}
+
+function openTournamentConfig(playerCount) {
+    tournamentConfig.style.display = 'block';
+    generatePlayerFields(playerCount);
+}
+
+function closeTournamentConfig() {
+    tournamentConfig.style.display = 'none';
+}
+
+function generatePlayerFields(count) {
+    const container = document.getElementById('players-container');
+    container.innerHTML = '';
+
+    // Premier joueur (utilisateur actuel)
+    container.innerHTML += `
+        <div class="player-entry">
+            <img class="player-avatar" src="/assets/avatars/buffalo.png" />
+            <input type="text" class="player-input" value="YourNickname" />
+        </div>
+    `;
+
+    // Autres joueurs (bots par défaut)
+    for(let i = 1; i < count; i++) {
+        container.innerHTML += `
+            <div class="player-entry">
+                <img class="player-avatar" src="/assets/avatars/mouse.png" />
+                <input type="text" class="player-input" value="Bot Player ${i}" />
+                <button class="add-friend-btn">
+                    <img src="/assets/icons/user-plus.svg" />
+                </button>
+            </div>
+        `;
+    }
+}
+
+// Fermer la popup si on clique en dehors
+tournamentConfig.addEventListener('click', (e) => {
+    if (e.target === tournamentConfig) {
+        closeTournamentConfig();
+    }
+});
+

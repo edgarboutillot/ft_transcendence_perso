@@ -41,7 +41,7 @@
         </div>
       </div>
     </div>
- 
+
     <div class="mainTournament">
       <div class="tournamentSection">
 
@@ -376,7 +376,7 @@
               </div>
               <div class="doubleMatchNumber">1</div>
               <div class="wiresHorizontal4"></div>
-              
+
             </div>
 
             <div class="doubleMatch">
@@ -457,7 +457,10 @@
 
       </div>
 
-      <div class="buttonPlay">PLAY</div>
+      <div class="buttonPlay">
+        <img class="playIcon" src="/assets/icons/play.svg" />
+        PLAY
+      </div>
 
       <div class="chipSelectorPlayer">
 
@@ -470,6 +473,30 @@
 
   </div>
   </div>
+
+  <!-- 2 -->
+
+  <!-- Ajoutez ce HTML à la fin de votre body -->
+<div id="tournamentConfig" class="popup-overlay">
+  <div class="popup-content">
+    <div class="popup-header">
+      <h2>Configuration du tournoi</h2>
+      <img class="close-icon" src="/assets/icons/close.svg" onclick="closeTournamentConfig()"/>
+    </div>
+
+    <div id="players-container" class="players-list">
+      <!-- Généré dynamiquement par JS -->
+    </div>
+
+    <div class="popup-footer">
+      <button class="start-tournament-btn">
+        <img class="playIcon" src="/assets/icons/play.svg" />
+        START TOURNAMENT
+      </button>
+    </div>
+  </div>
+</div>
+
   <script src="/js/tournament.js"></script>
 </body>
 
