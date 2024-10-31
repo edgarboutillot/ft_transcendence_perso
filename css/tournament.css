@@ -228,8 +228,6 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  /* background-color: var(--liquid-lava); */
-  /* cursor: pointer; */
   transition: color 0.3s ease;
 }
 
@@ -642,4 +640,20 @@
   font-size: var(--24px);
   font-family: "Inter", sans-serif;
   font-weight: 600;
+}
+
+.reset-btn {
+  background-color: var(--slate-grey);
+  border: none;
+  color: var(--snow);
+  border-radius: var(--radius-lg);
+  padding: var(--8px) var(--16px);
+  font-size: var(--16px);
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.reset-btn:hover {
+  background-color: var(--liquid-lava);
 }
