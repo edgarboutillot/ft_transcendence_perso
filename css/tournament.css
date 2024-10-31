@@ -55,7 +55,6 @@
   justify-content: space-evenly;
   align-items: center;
   gap: var(--32px);
-  /* display: none;  */
 }
 
 .subTournamentSection8161 {
@@ -65,7 +64,6 @@
   justify-content: space-evenly;
   align-items: center;
   gap: var(--32px);
-  /* display: none;  */
 }
 
 .subTournamentSection162 {
@@ -75,7 +73,6 @@
   justify-content: space-evenly;
   align-items: center;
   gap: var(--32px);
-  /* display: none;  */
 }
 
 .tournamentSection1 {
@@ -239,7 +236,6 @@
   justify-content: center;
   align-items: center;
   height: 1.5vw;
-  /* cursor: pointer; */
   transition: color 0.3s ease;
 }
 
@@ -271,7 +267,6 @@
   font-family: "Inter", sans-serif;
   font-weight: 600;
   padding: var(--4px) var(--0px);
-  /* cursor: pointer; */
 }
 
 .numberMid {
@@ -286,7 +281,6 @@
   font-family: "Inter", sans-serif;
   font-weight: 600;
   padding: var(--4px) var(--0px);
-  /* cursor: pointer; */
 }
 
 .numberRight {
@@ -301,7 +295,6 @@
   font-family: "Inter", sans-serif;
   font-weight: 600;
   padding: var(--4px) var(--0px);
-  /* cursor: pointer; */
 }
 
 .wiresHorizontal {
@@ -323,9 +316,9 @@
   content: "";
   position: absolute;
   top: 51%;
-  left: 100%; /* Ajustement pour tenir compte de l'épaisseur de la bordure */
-  width: 4vw; /* Longueur de la ligne horizontale */
-  height: 0.2vw; /* Épaisseur de la ligne */
+  left: 100%;
+  width: 4vw;
+  height: 0.2vw;
 }
 
 .wiresHorizontal2 {
@@ -347,9 +340,9 @@
   content: "";
   position: absolute;
   top: 50%;
-  left: 100%; /* Ajustement pour tenir compte de l'épaisseur de la bordure */
-  width: 3.6vw; /* Longueur de la ligne horizontale */
-  height: 0.2vw; /* Épaisseur de la ligne */
+  left: 100%;
+  width: 3.6vw;
+  height: 0.2vw;
 }
 
 .wiresHorizontal3 {
@@ -381,9 +374,9 @@
   content: "";
   position: absolute;
   top: 51%;
-  left: -149%; /* Ajustement pour tenir compte de l'épaisseur de la bordure */
-  width: 4vw; /* Longueur de la ligne horizontale */
-  height: 0.2vw; /* Épaisseur de la ligne */
+  left: -149%;
+  width: 4vw;
+  height: 0.2vw;
 }
 
 .wiresHorizontal5 {
@@ -405,9 +398,9 @@
   content: "";
   position: absolute;
   top: 50%;
-  left: -134%; /* Ajustement pour tenir compte de l'épaisseur de la bordure */
-  width: 3.6vw; /* Longueur de la ligne horizontale */
-  height: 0.2vw; /* Épaisseur de la ligne */
+  left: -134%;
+  width: 3.6vw;
+  height: 0.2vw;
 }
 
 .wiresHorizontal6 {
@@ -439,9 +432,9 @@
   content: "";
   position: absolute;
   top: 50%;
-  left: 100%; /* Ajustement pour tenir compte de l'épaisseur de la bordure */
-  width: 9.5vw; /* Longueur de la ligne horizontale */
-  height: 0.2vw; /* Épaisseur de la ligne */
+  left: 100%;
+  width: 9.5vw;
+  height: 0.2vw;
 }
 
 .wiresHorizontal8 {
@@ -482,9 +475,7 @@
   display: flex;
 }
 
-/* 2 */
-
-.buttonPlay{
+.buttonPlay {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -497,11 +488,9 @@
   font-size: var(--24px);
   font-family: "Inter", sans-serif;
   font-weight: 600;
-
 }
 
-.playIcon
-{
+.playIcon {
   fill: var(--snow);
   display: flex;
   justify-content: center;
@@ -510,9 +499,6 @@
   width: var(--40px);
 }
 
-/* 2 */
-
-/* Ajoutez ce CSS à votre fichier tournament.css */
 .popup-overlay {
   display: none;
   position: fixed;
@@ -656,4 +642,12 @@
 
 .reset-btn:hover {
   background-color: var(--liquid-lava);
+}
+
+.doubleMatchNumber {
+  transition: background-color 0.3s ease;
+}
+
+.doubleMatchNumber.active {
+  background-color: var(--liquid-lava) !important;
 }
