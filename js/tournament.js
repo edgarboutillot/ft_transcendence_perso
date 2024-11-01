@@ -463,9 +463,17 @@ function updateViewForCurrentMatch() {
   }
 }
 
+// playButton.addEventListener("click", () => {
+//   const playerCount = getSelectedPlayerCount();
+//   openTournamentConfig(playerCount);
+// });
+
 playButton.addEventListener("click", () => {
-  const playerCount = getSelectedPlayerCount();
-  openTournamentConfig(playerCount);
+    if (tournamentState.isStarted) {
+        startMatch();
+    } else {
+        openTournamentConfig(getSelectedPlayerCount());
+    }
 });
 
 // Initialisation
@@ -513,3 +521,68 @@ function progressTournament(winnerIndex) {
 }
 
 handleOptionChange("4");
+
+
+
+// ZOOOOOB
+
+
+function startMatch() {
+    const modal = document.createElement('div');
+    modal.id = 'gameModal';
+    modal.style.cssText = `
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.9);
+        z-index: 1000;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    `;
+
+    // Créer un iframe pour le jeu
+    const iframe = document.createElement('iframe');
+    iframe.src = '/js/game/three.html';
+    iframe.style.cssText = `
+        width: 80%;
+        height: 80%;
+        border: none;
+    `;
+
+    // Ajouter les instructions
+    const instructions = document.createElement('div');
+    instructions.style.cssText = `
+        color: white;
+        margin-top: 20px;
+        text-align: center;
+        font-family: Arial, sans-serif;
+    `;
+    instructions.innerHTML = `
+        Joueur 1: W/S | Joueur 2: Flèches Haut/Bas<br>
+        Espace pour lancer la balle
+    `;
+
+    modal.appendChild(iframe);
+    modal.appendChild(instructions);
+    document.body.appendChild(modal);
+
+    // Écouter les messages du jeu
+    const messageHandler = function(event) {
+        if (event.data.type === 'gameComplete') {
+            // Mettre à jour le tournoi avec le gagnant
+            progressTournament(event.data.winner);
+            
+            // Nettoyer
+            window.removeEventListener('message', messageHandler);
+            setTimeout(() => {
+                document.body.removeChild(modal);
+            }, 2000); // Délai pour voir le message de victoire
+        }
+    };
+
+    window.addEventListener('message', messageHandler);
+}
