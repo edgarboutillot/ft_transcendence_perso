@@ -514,3 +514,24 @@ html, body {
   background-color: var(--liquid-lava) !important;
 }
 
+
+.add-friend-btn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  border: 3px solid var(--dusty-grey);
+  border-radius: var(--radius-lg);
+  padding: var(--8px);
+  cursor: pointer;
+  width: var(--40px);
+  height: var(--40px);
+}
+
+.add-friend-btn img {
+  width: var(--24px);
+  height: var(--24px);
+  fill: var(--snow);
+  padding: 0;   
+  background: none; 
+}
