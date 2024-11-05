@@ -281,6 +281,25 @@ export class Score3D {
       this.updateScore(1);
       this.updateScore(2);
     }
+
+    if (window !== window.parent) {
+      window.parent.postMessage({
+        type: 'scoreUpdate',
+        data: {
+          player1Score: this.score.player1,
+          player2Score: this.score.player2
+        }
+      }, '*');
+  
+      // Si c'est la fin du jeu
+      if (this.gameOver) {
+        const winner = this.score.player1 > this.score.player2 ? 0 : 1;
+        window.parent.postMessage({
+          type: 'gameComplete',
+          data: { winner }
+        }, '*');
+      }
+    }
   }
 
   dispose() {

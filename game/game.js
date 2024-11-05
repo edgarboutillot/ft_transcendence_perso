@@ -22,6 +22,46 @@ export const camera = new THREE.PerspectiveCamera(
   2000
 );
 
+// Au début de game.js
+if (window.gameCleanup) {
+  window.gameCleanup();
+}
+
+window.gameCleanup = function() {
+  if (typeof renderer !== 'undefined') {
+    renderer.dispose();
+  }
+  if (typeof scene !== 'undefined') {
+    scene.traverse(object => {
+      if (object.geometry) {
+        object.geometry.dispose();
+      }
+      if (object.material) {
+        if (Array.isArray(object.material)) {
+          object.material.forEach(material => material.dispose());
+        } else {
+          object.material.dispose();
+        }
+      }
+    });
+  }
+  if (typeof composer !== 'undefined') {
+    composer.dispose();
+  }
+
+  // Supprimer les event listeners
+  window.removeEventListener('resize', onWindowResize);
+  window.removeEventListener('keydown', null);
+  window.removeEventListener('keyup', null);
+
+  // Nettoyer les variables globales
+  window.scene = undefined;
+  window.camera = undefined;
+  window.renderer = undefined;
+  window.composer = undefined;
+  window.controls = undefined;
+}
+
 // Modifier la création du renderer
 const renderer = new THREE.WebGLRenderer({
   antialias: true,

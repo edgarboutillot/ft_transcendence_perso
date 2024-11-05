@@ -328,12 +328,19 @@ const tournamentState = {
   currentRound: 1,
   matchResults: {},
 };
-
-// Gestionnaire du jeu en tournoi
 class TournamentGameManager {
   constructor(tournamentState) {
     this.tournamentState = tournamentState;
-    this.gameContainer = document.createElement('div');
+    this.setupGameContainer();
+  }
+
+  setupGameContainer() {
+    const oldContainer = document.getElementById('gameContainer');
+    if (oldContainer) {
+      oldContainer.remove();
+    }
+
+    this.gameContainer = document.createElement('iframe');
     this.gameContainer.id = 'gameContainer';
     this.gameContainer.style.cssText = `
       position: fixed;
@@ -341,27 +348,19 @@ class TournamentGameManager {
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0, 0, 0, 0.9);
+      border: none;
       display: none;
       z-index: 2000;
-      justify-content: center;
-      align-items: center;
     `;
 
-    this.gameElement = document.createElement('div');
-    this.gameElement.id = 'game';
-    this.gameElement.style.cssText = `
-      width: 100%;
-      height: 100%;
-    `;
-
-    this.gameContainer.appendChild(this.gameElement);
     document.body.appendChild(this.gameContainer);
 
-    window.addEventListener('gameEnd', (event) => {
-      const winner = event.detail.winner;
-      this.endGame();
-      progressTournament(winner - 1);
+    // Écouter les messages du jeu
+    window.addEventListener('message', (event) => {
+      if (event.data.type === 'gameComplete') {
+        this.endGame();
+        progressTournament(event.data.data.winner);
+      }
     });
   }
 
@@ -372,27 +371,25 @@ class TournamentGameManager {
       return;
     }
 
-    this.gameContainer.style.display = 'flex';
-    this.initializeGame(currentMatch.player1, currentMatch.player2);
-  }
+    // Charger le jeu dans l'iframe
+    this.gameContainer.src = '/game/three.html';
+    this.gameContainer.style.display = 'block';
 
-  initializeGame(player1, player2) {
-    this.gameElement.innerHTML = '';
-    
-    const script = document.createElement('script');
-    script.type = 'module';
-    script.src = '/js/game.js';
-    this.gameElement.appendChild(script);
-
-    window.currentPlayers = {
-      player1: player1,
-      player2: player2
+    // Passer les informations des joueurs au jeu
+    this.gameContainer.onload = () => {
+      this.gameContainer.contentWindow.postMessage({
+        type: 'startGame',
+        data: {
+          player1: currentMatch.player1,
+          player2: currentMatch.player2
+        }
+      }, '*');
     };
   }
 
   endGame() {
     this.gameContainer.style.display = 'none';
-    this.gameElement.innerHTML = '';
+    this.gameContainer.src = 'about:blank';
   }
 }
 

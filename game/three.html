@@ -16,6 +16,15 @@
   </head>
   <body>
     <div id="game"></div>
+
+    <script>
+      // Écouter les messages du tournoi
+      window.addEventListener('message', (event) => {
+        if (event.data.type === 'startGame') {
+          window.currentPlayers = event.data.data;
+        }
+      });
+      </script>
     <script src="https://cdn.jsdelivr.net/npm/lil-gui@0.18"></script>
     <script type="importmap">
       {
