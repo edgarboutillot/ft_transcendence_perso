@@ -27,13 +27,12 @@ function updateMatchNumbers(shape, playerCount) {
     matches.forEach((match, index) => {
       const numberElement = match.querySelector(".doubleMatchNumber");
       if (numberElement) {
-        // Mise à jour des numéros uniquement pour la structure 816display
         if (shape.id === "816display") {
           switch (index) {
-            case 4: // Premier match du second tour
+            case 4:
               numberElement.textContent = "9";
               break;
-            case 5: // Deuxième match du second tour
+            case 5:
               numberElement.textContent = "10";
               break;
             case 6: // Match du troisième tour
