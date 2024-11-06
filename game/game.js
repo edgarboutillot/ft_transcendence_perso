@@ -27,6 +27,17 @@ if (window.gameCleanup) {
   window.gameCleanup();
 }
 
+
+// Ajouter près du début de game.js
+window.dispatchGameEnd = function(winner) {
+  if (window.parent !== window) {
+    window.parent.postMessage({
+      type: 'gameComplete',
+      data: { winner: winner - 1 }  // -1 car le tournament attend 0 ou 1
+    }, '*');
+  }
+};
+
 window.gameCleanup = function() {
   if (typeof renderer !== 'undefined') {
     renderer.dispose();
@@ -998,27 +1009,24 @@ function animate() {
       }
     }
 
-    // Point marqué
     if (ball.position.x < paddle1.position.x) {
-      // impactPoint.visible = false;
       flashNeonBorder();
       scoreSystem.updateScore(2); // Point pour joueur 2
       if (scoreSystem.isGameOver()) {
         isBallMoving = false;
         ball.position.set(0, -100, 0);
-        window.dispatchGameEnd(2); // Ajout ici - Joueur 2 gagne
+        // Enlever l'appel à dispatchGameEnd ici car il est déjà dans Score3D
       } else {
         resetBall();
         setTimeout(launchBall, 500);
       }
     } else if (ball.position.x > paddle2.position.x) {
-      // impactPoint.visible = false;
       flashNeonBorder();
       scoreSystem.updateScore(1); // Point pour joueur 1
       if (scoreSystem.isGameOver()) {
         isBallMoving = false;
         ball.position.set(0, -100, 0);
-        window.dispatchGameEnd(1); // Ajout ici - Joueur 2 gagne
+        // Enlever l'appel à dispatchGameEnd ici car il est déjà dans Score3D
       } else {
         resetBall();
         setTimeout(launchBall, 500);
