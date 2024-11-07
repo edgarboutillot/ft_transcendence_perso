@@ -559,3 +559,273 @@ html, body {
   border: 3px solid var(--liquid-lava);
   color: var(--liquid-lava);
 }
+
+
+
+/* Styles communs */
+.victory-overlay, .tournament-winner-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2500;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.victory-overlay {
+  background: rgba(0, 0, 0, 0.75);
+}
+
+.tournament-winner-overlay {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+.tournament-winner-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 24px;
+  padding: 48px;
+  transform: translateY(50px);
+  opacity: 0;
+  transition: all 0.6s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+  width: 100%;
+  max-width: 800px;
+}
+/* Style pour la victoire de match */
+.victory-content {
+  background: var(--gluon-grey);
+  border-radius: var(--radius-xl);
+  padding: 48px;
+  text-align: center;
+  transform: translateY(50px);
+  opacity: 0;
+  transition: all 0.6s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+  position: relative;
+  overflow: hidden;
+}
+
+/* Pour l'écran de victoire de match */
+.victory-score {
+  font-size: 32px;
+  color: var(--liquid-lava);
+  font-family: "Inter", sans-serif;
+  font-weight: bold;
+  margin-top: 16px;
+  text-transform: uppercase;
+  text-shadow: 0 0 10px rgba(255, 69, 0, 0.3);
+}
+
+.victory-icon {
+  width: 100px;
+  height: 100px;
+  filter: invert(1);
+  animation: victoryIconSpin 1.5s ease-out;
+  margin-bottom: 20px;
+}
+
+.victory-flash {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  animation: flashAnimation 1s ease-out;
+}
+
+/* Assurer que le conteneur des confettis ne crée pas de ligne */
+.tournament-winner-overlay {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2500;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  overflow: hidden; /* Empêcher le débordement */
+}
+
+
+/* Mise à jour du conteneur de trophée */
+.trophy-container {
+  position: relative;
+  width: 300px; /* Largeur fixe */
+  height: 300px; /* Hauteur fixe */
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.trophy-icon {
+  position: relative; /* Changé de absolute à relative */
+  width: 180px;
+  height: 180px;
+  filter: invert(1) drop-shadow(0 0 30px var(--liquid-lava));
+  animation: trophyEntrance 2s ease-out, trophyFloat 3s ease-in-out infinite;
+  z-index: 2;
+  transform: translate(0, 0); /* Retiré le transform qui causait des problèmes */
+}
+
+.trophy-rays {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 300px;
+  height: 300px;
+  background: radial-gradient(circle, var(--liquid-lava) 0%, transparent 70%);
+  opacity: 0.3;
+  animation: raysExpand 2s ease-out, raysPulse 3s infinite;
+  z-index: 1;
+}
+
+
+.confetti {
+  position: fixed; /* Changed from absolute to fixed */
+  pointer-events: none; /* S'assurer que les confettis n'interfèrent pas avec les clics */
+  z-index: 1;
+  animation: confettiFall 3s linear infinite;
+}
+
+/* Style du nom du gagnant */
+.winner-name {
+  font-size: 64px;
+  font-weight: bold;
+  color: var(--snow);
+  margin: 20px 0;
+  text-align: center;
+  background: linear-gradient(45deg, var(--snow) 0%, var(--liquid-lava) 50%, var(--snow) 100%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: gradientFlow 3s linear infinite;
+}
+
+.winner-title {
+  font-size: 36px;
+  color: var(--snow);
+  opacity: 0.9;
+  margin: 0;
+  font-family: "Inter", sans-serif;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+/* Style pour le score final dans l'écran du champion */
+.final-score {
+  font-size: 36px;
+  color: var(--snow);
+  font-family: "Inter", sans-serif;
+  margin: 20px 0;
+  line-height: 1.5;
+  text-transform: uppercase;
+}
+
+.final-score span {
+  color: var(--liquid-lava);
+  font-weight: bold;
+  font-size: 48px;
+  text-shadow: 0 0 20px rgba(255, 69, 0, 0.4);
+}
+
+.continue-btn {
+  margin-top: 32px;
+  padding: 16px 32px;
+  background-color: var(--liquid-lava);
+  border: none;
+  border-radius: var(--radius-lg);
+  color: var(--snow);
+  font-size: 24px;
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  animation: buttonPulse 2s infinite;
+}
+
+/* Animations */
+@keyframes victoryIconSpin {
+  0% { transform: scale(0) rotate(-180deg); }
+  50% { transform: scale(1.2) rotate(10deg); }
+  100% { transform: scale(1) rotate(0deg); }
+}
+
+@keyframes flashAnimation {
+  0% { left: -100%; }
+  100% { left: 100%; }
+}
+
+/* Mise à jour de l'animation du trophée */
+@keyframes trophyFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-20px); }
+}
+
+@keyframes trophyEntrance {
+  0% { transform: scale(0); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
+}
+
+@keyframes raysExpand {
+  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
+  50% { opacity: 0.5; }
+  100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+}
+
+@keyframes raysPulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+  50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.5; }
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% center; }
+  100% { background-position: 200% center; }
+}
+
+@keyframes buttonPulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 69, 0, 0.4); }
+}
+
+@keyframes confettiFall {
+  0% {
+    transform: translateY(-10px) rotate(0deg);
+    opacity: 1;
+  }
+  80% {
+    opacity: 1;
+  }
+  100% {
+    transform: translateY(100vh) rotate(720deg);
+    opacity: 0;
+  }
+}
+
+
+/* Classes d'activation */
+.victory-overlay.show, .tournament-winner-overlay.show {
+  display: flex;
+  opacity: 1;
+}
+
+.victory-overlay.show .victory-content,
+.tournament-winner-overlay.show .tournament-winner-content {
+  transform: scale(1);
+  opacity: 1;
+}
+
+

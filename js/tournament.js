@@ -425,12 +425,22 @@ function handleOptionChange(value) {
   }
 }
 
-// Remplacer la fonction progressTournament existante par :
+
 function progressTournament(winnerIndex, finalScores) {
   const currentMatch = tournamentState.matches[tournamentState.currentMatch];
-  const winner =
-    winnerIndex === 0 ? currentMatch.player1 : currentMatch.player2;
+  const winner = winnerIndex === 0 ? currentMatch.player1 : currentMatch.player2;
   const playerCount = getSelectedPlayerCount();
+  
+  // Déterminer si c'est le dernier match
+  const isLastMatch = (playerCount === 4 && tournamentState.currentMatch === 2) || 
+                     (playerCount === 8 && tournamentState.currentMatch === 6);
+
+  // Montrer l'animation appropriée
+  if (isLastMatch) {
+    showTournamentWinner(winner, finalScores);
+  } else {
+    showMatchVictory(winner, finalScores.player1, finalScores.player2);
+  }
 
   // Set the actual scores from the game
   currentMatch.score1 = finalScores.player1;
@@ -438,7 +448,7 @@ function progressTournament(winnerIndex, finalScores) {
   currentMatch.winner = winner;
   tournamentState.matchResults[tournamentState.currentMatch] = {
     winner: winner,
-    scores: finalScores,
+    scores: finalScores
   };
 
   if (playerCount === 4) {
@@ -468,8 +478,7 @@ function progressTournament(winnerIndex, finalScores) {
   } else if (playerCount === 8) {
     if (tournamentState.currentMatch < 4) {
       // Premier tour (matchs 0 à 3)
-      const nextRoundMatchIndex =
-        4 + Math.floor(tournamentState.currentMatch / 2);
+      const nextRoundMatchIndex = 4 + Math.floor(tournamentState.currentMatch / 2);
       if (tournamentState.currentMatch % 2 === 0) {
         tournamentState.matches[nextRoundMatchIndex].player1 = winner;
       } else {
@@ -500,41 +509,92 @@ function progressTournament(winnerIndex, finalScores) {
     }
   }
 
-  tournamentState.currentMatch++;
-  updateBracketDisplay();
-  updateCurrentMatchIndicators();
-  updatePlayButton();
+  // Attendre que l'animation soit terminée avant de mettre à jour l'affichage
+  const updateDisplay = () => {
+    tournamentState.currentMatch++;
+    updateBracketDisplay();
+    updateCurrentMatchIndicators();
+    updatePlayButton();
+  };
+
+  // Si c'est le dernier match, on attend un peu plus longtemps pour l'animation finale
+  if (isLastMatch) {
+    setTimeout(updateDisplay, 1000); // Donner du temps pour l'animation finale
+  } else {
+    setTimeout(updateDisplay, 500); // Temps standard pour les victoires normales
+  }
 }
+
+// function updatePlayButton() {
+//   const playerCount = getSelectedPlayerCount();
+//   const lastMatchIndex = playerCount === 4 ? 3 : 7; // Mise à jour pour inclure l'affichage final
+//   const isLastMatch = tournamentState.currentMatch >= lastMatchIndex;
+//   const nextMatch = tournamentState.matches[tournamentState.currentMatch];
+
+//   const playButton = document.querySelector(".buttonPlay");
+//   const buttonText = playButton.querySelector(".button-text");
+
+//   if (isLastMatch) {
+//     buttonText.textContent = "Tournament Complete!";
+//     playButton.disabled = true;
+//     return;
+//   }
+
+//   if (!nextMatch || !nextMatch.player1 || !nextMatch.player2) {
+//     buttonText.textContent = "Waiting for next matches";
+//     playButton.disabled = true;
+//     return;
+//   }
+
+//   let matchText = "LAUNCH MATCH";
+//   if (tournamentState.currentMatch === lastMatchIndex) {
+//     matchText = "LAUNCH FINAL";
+//   } else if (playerCount === 8 && tournamentState.currentMatch >= 4) {
+//     matchText = "LAUNCH SEMI-FINAL";
+//   }
+
+//   buttonText.textContent = `${matchText}: ${nextMatch.player1.name} VS ${nextMatch.player2.name}`;
+//   playButton.disabled = false;
+// }
+
 
 function updatePlayButton() {
   const playerCount = getSelectedPlayerCount();
-  const lastMatchIndex = playerCount === 4 ? 3 : 7; // Mise à jour pour inclure l'affichage final
+  const lastMatchIndex = playerCount === 4 ? 3 : 7;
   const isLastMatch = tournamentState.currentMatch >= lastMatchIndex;
   const nextMatch = tournamentState.matches[tournamentState.currentMatch];
 
-  const playButton = document.querySelector(".buttonPlay");
-  const buttonText = playButton.querySelector(".button-text");
+  const playButton = document.querySelector('.buttonPlay');
 
   if (isLastMatch) {
-    buttonText.textContent = "Tournament Complete!";
+    playButton.innerHTML = `
+      <img class="playIcon" src="/assets/icons/play.svg" />
+      <span class="button-text">Tournament Complete!</span>
+    `;
     playButton.disabled = true;
     return;
   }
 
   if (!nextMatch || !nextMatch.player1 || !nextMatch.player2) {
-    buttonText.textContent = "Waiting for next matches";
+    playButton.innerHTML = `
+      <img class="playIcon" src="/assets/icons/play.svg" />
+      <span class="button-text">Waiting for next matches</span>
+    `;
     playButton.disabled = true;
     return;
   }
 
   let matchText = "LAUNCH MATCH";
-  if (tournamentState.currentMatch === lastMatchIndex) {
+  if (tournamentState.currentMatch === lastMatchIndex - 1) {
     matchText = "LAUNCH FINAL";
   } else if (playerCount === 8 && tournamentState.currentMatch >= 4) {
     matchText = "LAUNCH SEMI-FINAL";
   }
 
-  buttonText.textContent = `${matchText}: ${nextMatch.player1.name} VS ${nextMatch.player2.name}`;
+  playButton.innerHTML = `
+    <img class="playIcon" src="/assets/icons/play.svg" />
+    <span class="button-text">${matchText}</span>
+  `;
   playButton.disabled = false;
 }
 
@@ -620,3 +680,139 @@ window.dispatchGameEnd = function (winner) {
   });
   window.dispatchEvent(event);
 };
+
+
+
+function showVictoryScreen(winner, score1, score2) {
+  const overlay = document.querySelector('.victory-overlay');
+  const winnerNameElement = overlay.querySelector('.winner-name');
+  const scoreElement = overlay.querySelector('.victory-score');
+  const continueBtn = overlay.querySelector('.continue-btn');
+
+  winnerNameElement.textContent = winner.name;
+  scoreElement.innerHTML = `<span>${score1}</span> - <span>${score2}</span>`;
+
+  overlay.classList.add('show');
+
+  // Gérer le bouton continue
+  const handleContinue = () => {
+    overlay.classList.remove('show');
+    continueBtn.removeEventListener('click', handleContinue);
+  };
+  
+  continueBtn.addEventListener('click', handleContinue);
+}
+
+
+
+
+function createConfetti() {
+  const colors = [
+    'var(--liquid-lava)',    // Orange principal
+    'var(--dusty-grey)',     // Gris clair
+    'var(--slate-grey)',     // Gris foncé
+    'var(--gluon-grey)'      // Gris très foncé
+  ];
+  
+  const confettiCount = 50; // Réduit le nombre pour de meilleures performances
+  const container = document.querySelector('.tournament-winner-overlay');
+
+  // Créer un groupe de confettis avec des délais différents
+  for (let i = 0; i < confettiCount; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    
+    // Position horizontale aléatoire
+    confetti.style.left = `${Math.random() * 100}vw`;
+    
+    // Position verticale initiale légèrement au-dessus de l'écran
+    confetti.style.top = `-${Math.random() * 20}px`;
+    
+    // Propriétés aléatoires pour plus de variété
+    const size = 5 + Math.random() * 7; // Taille réduite pour plus de légèreté
+    confetti.style.width = `${size}px`;
+    confetti.style.height = `${size}px`;
+    
+    // Rotation et animation personnalisées
+    const rotation = Math.random() * 360;
+    const animationDuration = 3 + Math.random() * 2; // Entre 3 et 5 secondes
+    const animationDelay = Math.random() * 2; // Délai entre 0 et 2 secondes
+    
+    confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.borderRadius = Math.random() > 0.5 ? '50%' : '3px';
+    confetti.style.transform = `rotate(${rotation}deg)`;
+    confetti.style.animation = `confettiFall ${animationDuration}s linear ${animationDelay}s infinite`;
+    
+    container.appendChild(confetti);
+
+    // Supprimer le confetti après quelques animations pour éviter l'accumulation
+    setTimeout(() => {
+      confetti.remove();
+    }, 15000); // Suppression après 15 secondes
+  }
+}
+
+
+
+
+function showMatchVictory(winner, score1, score2) {
+  const overlay = document.querySelector('.victory-overlay');
+  const winnerNameElement = overlay.querySelector('.winner-name');
+  const scoreElement = overlay.querySelector('.victory-score');
+  const continueBtn = overlay.querySelector('.continue-btn');
+
+  winnerNameElement.textContent = winner.name;
+  scoreElement.innerHTML = `WON THE GAME`; // Texte modifié ici
+
+  overlay.classList.add('show');
+
+  const handleContinue = () => {
+    overlay.classList.remove('show');
+    continueBtn.removeEventListener('click', handleContinue);
+  };
+  
+  continueBtn.addEventListener('click', handleContinue);
+}
+
+
+
+
+function showTournamentWinner(winner, finalScores) {
+  const overlay = document.querySelector('.tournament-winner-overlay');
+  const winnerNameElement = overlay.querySelector('.winner-name');
+  const titleElement = overlay.querySelector('.winner-title'); // Pour le "TOURNAMENT CHAMPION"
+  const scoreElement = overlay.querySelector('.final-score');
+  const continueBtn = overlay.querySelector('.continue-btn');
+
+  // Nettoyer les confettis existants
+  overlay.querySelectorAll('.confetti').forEach(c => c.remove());
+
+  titleElement.textContent = 'TOURNAMENT CHAMPION';
+  winnerNameElement.textContent = winner.name;
+  
+  // On cache ou on enlève le score element qui n'est plus nécessaire
+  if (scoreElement) {
+    scoreElement.style.display = 'none';
+  }
+
+  overlay.classList.add('show');
+
+  // Créer les confettis initiaux
+  createConfetti();
+
+  // Créer de nouveaux confettis toutes les 2 secondes
+  const confettiInterval = setInterval(() => {
+    if (overlay.classList.contains('show')) {
+      createConfetti();
+    }
+  }, 2000);
+
+  const handleContinue = () => {
+    overlay.classList.remove('show');
+    clearInterval(confettiInterval);
+    overlay.querySelectorAll('.confetti').forEach(c => c.remove());
+    continueBtn.removeEventListener('click', handleContinue);
+  };
+  
+  continueBtn.addEventListener('click', handleContinue);
+}
