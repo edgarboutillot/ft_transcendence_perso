@@ -13,6 +13,10 @@ const tournamentState = {
 class TournamentGameManager {
   constructor(tournamentState) {
     this.tournamentState = tournamentState;
+    this.currentGameScores = {
+      player1: 0,
+      player2: 0,
+    };
     this.setupGameContainer();
   }
 
@@ -38,16 +42,29 @@ class TournamentGameManager {
 
     document.body.appendChild(this.gameContainer);
 
+    // Écoute des messages du jeu
     window.addEventListener("message", (event) => {
-      if (event.data.type === "gameComplete") {
-        console.log("Game completed, winner:", event.data.data.winner);
+      if (event.data.type === "scoreUpdate") {
+        // Mise à jour des scores en cours de partie
+        this.currentGameScores = {
+          player1: event.data.data.player1Score,
+          player2: event.data.data.player2Score,
+        };
+      } else if (event.data.type === "gameComplete") {
+        console.log("Game completed with data:", event.data.data);
         this.endGame();
-        progressTournament(event.data.data.winner);
+        progressTournament(event.data.data.winner, event.data.data.finalScores);
       }
     });
   }
 
   startGame() {
+    // Reset scores for new game
+    this.currentGameScores = {
+      player1: 0,
+      player2: 0,
+    };
+
     const currentMatch =
       this.tournamentState.matches[this.tournamentState.currentMatch];
     console.log("Starting game for match:", this.tournamentState.currentMatch);
@@ -334,21 +351,28 @@ function updateBracketDisplay() {
     const match = tournamentState.matches[index];
     if (!match) return;
 
+    // Mise à jour des joueurs
     const players = matchElement.querySelectorAll(".player");
+    const scores = matchElement.querySelectorAll(".score");
+
     players.forEach((playerElement, playerIndex) => {
       const nickname = playerElement.querySelector(".nickname");
       const avatar = playerElement.querySelector(".logo");
 
-      // Si c'est la case finale (4 pour 4 joueurs, 8 pour 8 joueurs)
+      // Si c'est la case finale
       if (index === (playerCount === 4 ? 3 : 7)) {
         const finalWinner =
           tournamentState.matches[playerCount === 4 ? 2 : 6]?.winner;
         if (finalWinner) {
           nickname.textContent = finalWinner.name;
           avatar.src = finalWinner.avatar;
+          playerElement.classList.add("winner");
+          scores[0]?.classList.add("winner");
         } else {
           nickname.textContent = "";
           avatar.src = DEFAULT_AVATAR;
+          playerElement.classList.remove("winner");
+          scores[0]?.classList.remove("winner");
         }
         return;
       }
@@ -358,11 +382,32 @@ function updateBracketDisplay() {
       if (currentPlayer) {
         nickname.textContent = currentPlayer.name;
         avatar.src = currentPlayer.avatar;
+
+        // Vérifier si ce joueur est le gagnant du match
+        if (match.winner && match.winner.name === currentPlayer.name) {
+          playerElement.classList.add("winner");
+          scores[playerIndex]?.classList.add("winner");
+        } else {
+          playerElement.classList.remove("winner");
+          scores[playerIndex]?.classList.remove("winner");
+        }
       } else {
         nickname.textContent = "";
         avatar.src = DEFAULT_AVATAR;
+        playerElement.classList.remove("winner");
+        scores[playerIndex]?.classList.remove("winner");
       }
     });
+
+    // Mise à jour des scores
+    if (match.winner) {
+      const winnerIndex =
+        match.player1 && match.winner.name === match.player1.name ? 0 : 1;
+      scores.forEach((scoreElement, scoreIndex) => {
+        scoreElement.textContent =
+          scoreIndex === 0 ? match.score1 : match.score2;
+      });
+    }
   });
 
   updateCurrentMatchIndicators();
@@ -380,14 +425,21 @@ function handleOptionChange(value) {
   }
 }
 
-function progressTournament(winnerIndex) {
+// Remplacer la fonction progressTournament existante par :
+function progressTournament(winnerIndex, finalScores) {
   const currentMatch = tournamentState.matches[tournamentState.currentMatch];
   const winner =
     winnerIndex === 0 ? currentMatch.player1 : currentMatch.player2;
   const playerCount = getSelectedPlayerCount();
 
+  // Set the actual scores from the game
+  currentMatch.score1 = finalScores.player1;
+  currentMatch.score2 = finalScores.player2;
   currentMatch.winner = winner;
-  tournamentState.matchResults[tournamentState.currentMatch] = winner;
+  tournamentState.matchResults[tournamentState.currentMatch] = {
+    winner: winner,
+    scores: finalScores,
+  };
 
   if (playerCount === 4) {
     if (tournamentState.currentMatch < 2) {
@@ -408,8 +460,8 @@ function progressTournament(winnerIndex) {
         round: 3,
         player1: winner,
         player2: null,
-        score1: 0,
-        score2: 0,
+        score1: finalScores.player1,
+        score2: finalScores.player2,
         winner: winner,
       };
     }
@@ -432,7 +484,8 @@ function progressTournament(winnerIndex) {
       }
     } else if (tournamentState.currentMatch === 6) {
       // Finale
-      tournamentState.matches[6].winner = winner;
+      const finalMatch = tournamentState.matches[6];
+      finalMatch.winner = winner;
 
       // Créer le match virtuel pour l'affichage final
       tournamentState.matches[7] = {
@@ -440,8 +493,8 @@ function progressTournament(winnerIndex) {
         round: 4,
         player1: winner,
         player2: null,
-        score1: 0,
-        score2: 0,
+        score1: finalScores.player1,
+        score2: finalScores.player2,
         winner: winner,
       };
     }

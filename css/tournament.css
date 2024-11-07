@@ -547,3 +547,15 @@ html, body {
   padding: 0;   
   background: none; 
 }
+
+
+/* Style pour le joueur gagnant */
+.player.winner {
+  border: 3px solid var(--liquid-lava);
+}
+
+/* Style pour le score gagnant */
+.score.winner {
+  border: 3px solid var(--liquid-lava);
+  color: var(--liquid-lava);
+}
