@@ -426,6 +426,112 @@ function handleOptionChange(value) {
 }
 
 
+// function progressTournament(winnerIndex, finalScores) {
+//   const currentMatch = tournamentState.matches[tournamentState.currentMatch];
+//   const winner = winnerIndex === 0 ? currentMatch.player1 : currentMatch.player2;
+//   const playerCount = getSelectedPlayerCount();
+  
+//   // Déterminer si c'est le dernier match
+//   const isLastMatch = (playerCount === 4 && tournamentState.currentMatch === 2) || 
+//                      (playerCount === 8 && tournamentState.currentMatch === 6);
+
+//   // Montrer l'animation appropriée
+//   if (isLastMatch) {
+//     showTournamentWinner(winner, finalScores);
+//   } else {
+//     showMatchVictory(winner, finalScores.player1, finalScores.player2);
+//   }
+
+//   // Set the actual scores from the game
+//   currentMatch.score1 = finalScores.player1;
+//   currentMatch.score2 = finalScores.player2;
+//   currentMatch.winner = winner;
+//   tournamentState.matchResults[tournamentState.currentMatch] = {
+//     winner: winner,
+//     scores: finalScores
+//   };
+
+//   if (playerCount === 4) {
+//     if (tournamentState.currentMatch < 2) {
+//       // Premier tour (matchs 0 et 1)
+//       if (tournamentState.currentMatch === 0) {
+//         tournamentState.matches[2].player1 = winner;
+//       } else {
+//         tournamentState.matches[2].player2 = winner;
+//       }
+//     } else if (tournamentState.currentMatch === 2) {
+//       // Finale
+//       const finalMatch = tournamentState.matches[2];
+//       finalMatch.winner = winner;
+
+//       // Créer le match virtuel pour l'affichage final
+//       tournamentState.matches[3] = {
+//         matchId: 3,
+//         round: 3,
+//         player1: winner,
+//         player2: null,
+//         score1: finalScores.player1,
+//         score2: finalScores.player2,
+//         winner: winner,
+//       };
+//     }
+//   } else if (playerCount === 8) {
+//     if (tournamentState.currentMatch < 4) {
+//       // Premier tour (matchs 0 à 3)
+//       const nextRoundMatchIndex = 4 + Math.floor(tournamentState.currentMatch / 2);
+//       if (tournamentState.currentMatch % 2 === 0) {
+//         tournamentState.matches[nextRoundMatchIndex].player1 = winner;
+//       } else {
+//         tournamentState.matches[nextRoundMatchIndex].player2 = winner;
+//       }
+//     } else if (tournamentState.currentMatch < 6) {
+//       // Demi-finales (matchs 4 et 5)
+//       if (tournamentState.currentMatch === 4) {
+//         tournamentState.matches[6].player1 = winner;
+//       } else {
+//         tournamentState.matches[6].player2 = winner;
+//       }
+//     } else if (tournamentState.currentMatch === 6) {
+//       // Finale
+//       const finalMatch = tournamentState.matches[6];
+//       finalMatch.winner = winner;
+
+//       // Créer le match virtuel pour l'affichage final
+//       tournamentState.matches[7] = {
+//         matchId: 7,
+//         round: 4,
+//         player1: winner,
+//         player2: null,
+//         score1: finalScores.player1,
+//         score2: finalScores.player2,
+//         winner: winner,
+//       };
+//     }
+//   }
+
+//   // Attendre que l'animation soit terminée avant de mettre à jour l'affichage
+//   const updateDisplay = () => {
+//     tournamentState.currentMatch++;
+//     updateBracketDisplay();
+//     updateCurrentMatchIndicators();
+//     updatePlayButton();
+//   };
+
+//   if (isLastMatch) {
+//     showTournamentWinner(winner, finalScores).then(() => {
+//       tournamentState.currentMatch++;
+//       updateBracketDisplay();
+//       updateCurrentMatchIndicators();
+//       updatePlayButton();
+//       // Ajouter un délai pour que l'animation de victoire se termine
+//       setTimeout(highlightFinalWinner, 1000);
+//     });
+//   } else {
+//     setTimeout(updateDisplay, 500); // Temps standard pour les victoires normales
+//   }
+// }
+
+
 function progressTournament(winnerIndex, finalScores) {
   const currentMatch = tournamentState.matches[tournamentState.currentMatch];
   const winner = winnerIndex === 0 ? currentMatch.player1 : currentMatch.player2;
@@ -434,13 +540,6 @@ function progressTournament(winnerIndex, finalScores) {
   // Déterminer si c'est le dernier match
   const isLastMatch = (playerCount === 4 && tournamentState.currentMatch === 2) || 
                      (playerCount === 8 && tournamentState.currentMatch === 6);
-
-  // Montrer l'animation appropriée
-  if (isLastMatch) {
-    showTournamentWinner(winner, finalScores);
-  } else {
-    showMatchVictory(winner, finalScores.player1, finalScores.player2);
-  }
 
   // Set the actual scores from the game
   currentMatch.score1 = finalScores.player1;
@@ -509,53 +608,27 @@ function progressTournament(winnerIndex, finalScores) {
     }
   }
 
-  // Attendre que l'animation soit terminée avant de mettre à jour l'affichage
-  const updateDisplay = () => {
-    tournamentState.currentMatch++;
-    updateBracketDisplay();
-    updateCurrentMatchIndicators();
-    updatePlayButton();
-  };
-
-  // Si c'est le dernier match, on attend un peu plus longtemps pour l'animation finale
+  // Montrer l'animation appropriée et mettre à jour l'affichage
   if (isLastMatch) {
-    setTimeout(updateDisplay, 1000); // Donner du temps pour l'animation finale
+    showTournamentWinner(winner, finalScores);
+    setTimeout(() => {
+      tournamentState.currentMatch++;
+      updateBracketDisplay();
+      updateCurrentMatchIndicators();
+      updatePlayButton();
+      setTimeout(highlightFinalWinner, 1000);
+    }, 500);
   } else {
-    setTimeout(updateDisplay, 500); // Temps standard pour les victoires normales
+    showMatchVictory(winner, finalScores.player1, finalScores.player2);
+    setTimeout(() => {
+      tournamentState.currentMatch++;
+      updateBracketDisplay();
+      updateCurrentMatchIndicators();
+      updatePlayButton();
+    }, 500);
   }
 }
 
-// function updatePlayButton() {
-//   const playerCount = getSelectedPlayerCount();
-//   const lastMatchIndex = playerCount === 4 ? 3 : 7; // Mise à jour pour inclure l'affichage final
-//   const isLastMatch = tournamentState.currentMatch >= lastMatchIndex;
-//   const nextMatch = tournamentState.matches[tournamentState.currentMatch];
-
-//   const playButton = document.querySelector(".buttonPlay");
-//   const buttonText = playButton.querySelector(".button-text");
-
-//   if (isLastMatch) {
-//     buttonText.textContent = "Tournament Complete!";
-//     playButton.disabled = true;
-//     return;
-//   }
-
-//   if (!nextMatch || !nextMatch.player1 || !nextMatch.player2) {
-//     buttonText.textContent = "Waiting for next matches";
-//     playButton.disabled = true;
-//     return;
-//   }
-
-//   let matchText = "LAUNCH MATCH";
-//   if (tournamentState.currentMatch === lastMatchIndex) {
-//     matchText = "LAUNCH FINAL";
-//   } else if (playerCount === 8 && tournamentState.currentMatch >= 4) {
-//     matchText = "LAUNCH SEMI-FINAL";
-//   }
-
-//   buttonText.textContent = `${matchText}: ${nextMatch.player1.name} VS ${nextMatch.player2.name}`;
-//   playButton.disabled = false;
-// }
 
 
 function updatePlayButton() {
@@ -563,15 +636,17 @@ function updatePlayButton() {
   const lastMatchIndex = playerCount === 4 ? 3 : 7;
   const isLastMatch = tournamentState.currentMatch >= lastMatchIndex;
   const nextMatch = tournamentState.matches[tournamentState.currentMatch];
-
   const playButton = document.querySelector('.buttonPlay');
 
   if (isLastMatch) {
     playButton.innerHTML = `
-      <img class="playIcon" src="/assets/icons/play.svg" />
       <span class="button-text">Tournament Complete!</span>
     `;
+    playButton.classList.add('tournament-complete');
     playButton.disabled = true;
+    
+    // Ajouter les effets spéciaux au vainqueur final
+    highlightFinalWinner();
     return;
   }
 
@@ -597,6 +672,37 @@ function updatePlayButton() {
   `;
   playButton.disabled = false;
 }
+
+
+// Nouvelle fonction pour mettre en évidence le vainqueur final
+function highlightFinalWinner() {
+  const playerCount = getSelectedPlayerCount();
+  const finalMatchIndex = playerCount === 4 ? 3 : 7;
+  const activeShape = document.querySelector('.shape.active');
+  
+  // Trouver le dernier match
+  const finalMatch = activeShape.querySelector(
+    `.tournamentSection${playerCount === 4 ? '4' : '4'} .doubleMatch`
+  );
+
+  if (finalMatch) {
+    // Mettre en évidence le numéro
+    const matchNumber = finalMatch.querySelector('.doubleMatchNumber');
+    if (matchNumber) {
+      matchNumber.classList.remove('active');
+      matchNumber.classList.add('winner-number');
+    }
+
+    // Mettre en évidence le joueur
+    const playerElement = finalMatch.querySelector('.player');
+    if (playerElement) {
+      playerElement.classList.remove('winner');
+      playerElement.classList.add('winner-final');
+    }
+  }
+}
+
+
 
 function startTournament() {
   const playerInputs = document.querySelectorAll(".player-entry .player-input");

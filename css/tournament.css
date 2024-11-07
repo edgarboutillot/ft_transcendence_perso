@@ -296,7 +296,7 @@ html, body {
   content: "";
   position: absolute;
   height: 0.2vw;
-  width: 7.5vw;
+  width: 8.5vw;
   left: 100%;
   top: 49%;
 }
@@ -332,7 +332,7 @@ html, body {
   content: "";
   position: absolute;
   height: 0.2vw;
-  width: 12.5vw;
+  width: 13.9vw;
   left: 100%;
   top: 49%;
 }
@@ -829,3 +829,181 @@ html, body {
 }
 
 
+
+
+/* Ajouter dans tournament.css */
+
+/* Animation pour le numéro de match actif */
+.doubleMatchNumber.active {
+  animation: matchPulse 2s infinite;
+  position: relative;
+}
+
+/* Effet de pulsation principal */
+@keyframes matchPulse {
+  0% {
+    background-color: var(--liquid-lava);
+    box-shadow: 0 0 0 0 rgba(255, 69, 0, 0.7);
+  }
+  
+  70% {
+    background-color: var(--liquid-lava);
+    box-shadow: 0 0 0 10px rgba(255, 69, 0, 0);
+  }
+  
+  100% {
+    background-color: var(--liquid-lava);
+    box-shadow: 0 0 0 0 rgba(255, 69, 0, 0);
+  }
+}
+
+/* Ajouter un effet de particules autour du numéro */
+.doubleMatchNumber.active::before,
+.doubleMatchNumber.active::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  border-radius: var(--16px);
+  background-color: var(--liquid-lava);
+  z-index: -1;
+  animation: particleEffect 2s infinite;
+  opacity: 0;
+}
+
+.doubleMatchNumber.active::after {
+  animation-delay: 1s;
+}
+
+@keyframes particleEffect {
+  0% {
+    transform: scale(1);
+    opacity: 0.5;
+  }
+  
+  100% {
+    transform: scale(1.5);
+    opacity: 0;
+  }
+}
+
+/* Effet de surbrillance */
+.doubleMatchNumber.active {
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+  transition: all 0.3s ease;
+}
+
+/* Animation de l'icône de flèche */
+@keyframes arrowBounce {
+  0%, 100% { transform: translateX(0); }
+  50% { transform: translateX(5px); }
+}
+
+/* Ajout d'une petite flèche à côté du numéro */
+.doubleMatchNumber.active::before {
+  content: '►';
+  position: absolute;
+  left: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 12px;
+  color: var(--liquid-lava);
+  animation: arrowBounce 1s ease-in-out infinite;
+  text-shadow: 0 0 5px rgba(255, 69, 0, 0.5);
+}
+
+/* Style de base du numéro de match */
+.doubleMatchNumber {
+  position: relative;
+  transition: all 0.3s ease;
+  display: flex;
+  width: var(--36px);
+  height: var(--36px);
+  border-radius: var(--16px);
+  justify-content: center;
+  align-items: center;
+  background-color: var(--dusty-grey);
+  color: var(--snow);
+  font-size: var(--20px);
+  font-family: "Inter", sans-serif;
+  font-weight: 600;
+  z-index: 1;
+}
+
+
+
+/* Ajouter dans tournament.css */
+
+/* Style spécial pour le bouton de fin de tournoi */
+.buttonPlay.tournament-complete {
+  background: linear-gradient(45deg, var(--liquid-lava), #ff8c42);
+}
+
+.buttonPlay.tournament-complete .playIcon {
+  display: none;
+}
+
+.buttonPlay.tournament-complete .button-text {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* Animation spéciale pour le numéro du vainqueur */
+.doubleMatch .doubleMatchNumber.winner-number {
+  background: linear-gradient(45deg, var(--liquid-lava), #ff8c42);
+  animation: winnerPulse 3s infinite;
+  border: 2px solid var(--liquid-lava);
+}
+
+@keyframes winnerPulse {
+  0%, 100% {
+    box-shadow: 0 0 15px var(--liquid-lava),
+                inset 0 0 10px rgba(255, 255, 255, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 30px var(--liquid-lava),
+                inset 0 0 20px rgba(255, 255, 255, 0.8);
+  }
+}
+
+/* Animation des bordures du joueur vainqueur */
+.player.winner-final {
+  position: relative;
+  border-color: var(--liquid-lava);
+  animation: borderGlow 3s infinite;
+  overflow: hidden;
+}
+
+.player.winner-final::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(90deg, 
+    var(--liquid-lava) 0%,
+    transparent 50%,
+    var(--liquid-lava) 100%
+  );
+  z-index: -1;
+  animation: borderRotate 3s linear infinite;
+}
+
+@keyframes borderGlow {
+  0%, 100% {
+    box-shadow: 0 0 15px var(--liquid-lava);
+  }
+  50% {
+    box-shadow: 0 0 30px var(--liquid-lava);
+  }
+}
+
+@keyframes borderRotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
