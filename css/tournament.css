@@ -5,7 +5,8 @@
 }
 
 /* Suppression de la barre de défilement et fixation de la hauteur */
-html, body {
+html,
+body {
   margin: 0;
   padding: 0;
   width: 100%;
@@ -14,7 +15,7 @@ html, body {
   background-color: var(--dark-void);
 }
 
- .main {
+.main {
   width: 100%;
   height: 100%;
   display: flex;
@@ -63,7 +64,6 @@ html, body {
   color: var(--snow);
   position: relative;
 }
-
 
 .subTournamentSection4 {
   display: flex;
@@ -301,8 +301,6 @@ html, body {
   top: 49%;
 }
 
-
-
 .wiresHorizontal7 {
   background-color: transparent;
   display: flex;
@@ -526,7 +524,6 @@ html, body {
   background-color: var(--liquid-lava) !important;
 }
 
-
 .add-friend-btn {
   display: flex;
   justify-content: center;
@@ -544,10 +541,9 @@ html, body {
   width: var(--24px);
   height: var(--24px);
   fill: var(--snow);
-  padding: 0;   
-  background: none; 
+  padding: 0;
+  background: none;
 }
-
 
 /* Style pour le joueur gagnant */
 .player.winner {
@@ -560,10 +556,9 @@ html, body {
   color: var(--liquid-lava);
 }
 
-
-
 /* Styles communs */
-.victory-overlay, .tournament-winner-overlay {
+.victory-overlay,
+.tournament-winner-overlay {
   display: none;
   position: fixed;
   top: 0;
@@ -637,7 +632,12 @@ html, body {
   left: -100%;
   width: 100%;
   height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  background: linear-gradient(
+    90deg,
+    transparent,
+    rgba(255, 255, 255, 0.2),
+    transparent
+  );
   animation: flashAnimation 1s ease-out;
 }
 
@@ -657,7 +657,6 @@ html, body {
   overflow: hidden; /* Empêcher le débordement */
 }
 
-
 /* Mise à jour du conteneur de trophée */
 .trophy-container {
   position: relative;
@@ -676,7 +675,10 @@ html, body {
   filter: invert(1) drop-shadow(0 0 30px var(--liquid-lava));
   animation: trophyEntrance 2s ease-out, trophyFloat 3s ease-in-out infinite;
   z-index: 2;
-  transform: translate(0, 0); /* Retiré le transform qui causait des problèmes */
+  transform: translate(
+    0,
+    0
+  ); /* Retiré le transform qui causait des problèmes */
 }
 
 .trophy-rays {
@@ -692,7 +694,6 @@ html, body {
   z-index: 1;
 }
 
-
 .confetti {
   position: fixed; /* Changed from absolute to fixed */
   pointer-events: none; /* S'assurer que les confettis n'interfèrent pas avec les clics */
@@ -707,7 +708,12 @@ html, body {
   color: var(--snow);
   margin: 20px 0;
   text-align: center;
-  background: linear-gradient(45deg, var(--snow) 0%, var(--liquid-lava) 50%, var(--snow) 100%);
+  background: linear-gradient(
+    45deg,
+    var(--snow) 0%,
+    var(--liquid-lava) 50%,
+    var(--snow) 100%
+  );
   background-size: 200% auto;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -758,47 +764,93 @@ html, body {
 
 /* Animations */
 @keyframes victoryIconSpin {
-  0% { transform: scale(0) rotate(-180deg); }
-  50% { transform: scale(1.2) rotate(10deg); }
-  100% { transform: scale(1) rotate(0deg); }
+  0% {
+    transform: scale(0) rotate(-180deg);
+  }
+  50% {
+    transform: scale(1.2) rotate(10deg);
+  }
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
 }
 
 @keyframes flashAnimation {
-  0% { left: -100%; }
-  100% { left: 100%; }
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
 }
 
 /* Mise à jour de l'animation du trophée */
 @keyframes trophyFloat {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-20px); }
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
 }
 
 @keyframes trophyEntrance {
-  0% { transform: scale(0); }
-  50% { transform: scale(1.2); }
-  100% { transform: scale(1); }
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes raysExpand {
-  0% { transform: translate(-50%, -50%) scale(0); opacity: 0; }
-  50% { opacity: 0.5; }
-  100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
+  0% {
+    transform: translate(-50%, -50%) scale(0);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.3;
+  }
 }
 
 @keyframes raysPulse {
-  0%, 100% { transform: translate(-50%, -50%) scale(1); opacity: 0.3; }
-  50% { transform: translate(-50%, -50%) scale(1.2); opacity: 0.5; }
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.2);
+    opacity: 0.5;
+  }
 }
 
 @keyframes gradientFlow {
-  0% { background-position: 0% center; }
-  100% { background-position: 200% center; }
+  0% {
+    background-position: 0% center;
+  }
+  100% {
+    background-position: 200% center;
+  }
 }
 
 @keyframes buttonPulse {
-  0%, 100% { transform: scale(1); }
-  50% { transform: scale(1.05); box-shadow: 0 0 30px rgba(255, 69, 0, 0.4); }
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 30px rgba(255, 69, 0, 0.4);
+  }
 }
 
 @keyframes confettiFall {
@@ -815,9 +867,9 @@ html, body {
   }
 }
 
-
 /* Classes d'activation */
-.victory-overlay.show, .tournament-winner-overlay.show {
+.victory-overlay.show,
+.tournament-winner-overlay.show {
   display: flex;
   opacity: 1;
 }
@@ -827,9 +879,6 @@ html, body {
   transform: scale(1);
   opacity: 1;
 }
-
-
-
 
 /* Ajouter dans tournament.css */
 
@@ -845,12 +894,12 @@ html, body {
     background-color: var(--liquid-lava);
     box-shadow: 0 0 0 0 rgba(255, 69, 0, 0.7);
   }
-  
+
   70% {
     background-color: var(--liquid-lava);
     box-shadow: 0 0 0 10px rgba(255, 69, 0, 0);
   }
-  
+
   100% {
     background-color: var(--liquid-lava);
     box-shadow: 0 0 0 0 rgba(255, 69, 0, 0);
@@ -860,7 +909,7 @@ html, body {
 /* Ajouter un effet de particules autour du numéro */
 .doubleMatchNumber.active::before,
 .doubleMatchNumber.active::after {
-  content: '';
+  content: "";
   position: absolute;
   width: 100%;
   height: 100%;
@@ -880,7 +929,7 @@ html, body {
     transform: scale(1);
     opacity: 0.5;
   }
-  
+
   100% {
     transform: scale(1.5);
     opacity: 0;
@@ -895,13 +944,18 @@ html, body {
 
 /* Animation de l'icône de flèche */
 @keyframes arrowBounce {
-  0%, 100% { transform: translateX(0); }
-  50% { transform: translateX(5px); }
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+  50% {
+    transform: translateX(5px);
+  }
 }
 
 /* Ajout d'une petite flèche à côté du numéro */
 .doubleMatchNumber.active::before {
-  content: '►';
+  content: "►";
   position: absolute;
   left: -20px;
   top: 50%;
@@ -930,8 +984,6 @@ html, body {
   z-index: 1;
 }
 
-
-
 /* Ajouter dans tournament.css */
 
 /* Style spécial pour le bouton de fin de tournoi */
@@ -956,13 +1008,14 @@ html, body {
 }
 
 @keyframes winnerPulse {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 15px var(--liquid-lava),
-                inset 0 0 10px rgba(255, 255, 255, 0.5);
+      inset 0 0 10px rgba(255, 255, 255, 0.5);
   }
   50% {
     box-shadow: 0 0 30px var(--liquid-lava),
-                inset 0 0 20px rgba(255, 255, 255, 0.8);
+      inset 0 0 20px rgba(255, 255, 255, 0.8);
   }
 }
 
@@ -975,13 +1028,14 @@ html, body {
 }
 
 .player.winner-final::before {
-  content: '';
+  content: "";
   position: absolute;
   top: -2px;
   left: -2px;
   right: -2px;
   bottom: -2px;
-  background: linear-gradient(90deg, 
+  background: linear-gradient(
+    90deg,
     var(--liquid-lava) 0%,
     transparent 50%,
     var(--liquid-lava) 100%
@@ -991,7 +1045,8 @@ html, body {
 }
 
 @keyframes borderGlow {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 15px var(--liquid-lava);
   }
   50% {
